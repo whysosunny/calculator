@@ -7,14 +7,28 @@ body {
     font-weight: bold;
 }
 
-tr,td,table {
+tr,td {
     border: 1px solid black;
 
+
 }
 
-table tr td.operation {
+table {
+    border: 5px solid black;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.output-box {
+    text-align: right;
+    padding: 10px 20px;
+    border-left: none;
+}
+
+
+table tr td.operation-display {
     border: none;
 }
+
 
 td {
     width: 70px;
@@ -28,16 +42,31 @@ tr:last-of-type td{
     height: 60px;
 }
 
+tr:first-of-type td {
+    background: white;
+}
+
+tr:first-of-type td:hover {
+    background: white;
+    cursor: default;
+}
+
 a {
     color: black;
 }
 
 td:hover {
     cursor: pointer;
+    background: rgba(241, 241, 241, 0.83);
 }
 
-.output-box {
-    text-align: right;
-    padding: 10px 20px;
-    border-left: none;
+td.store {
+    color: #c2c2c2;
 }
+
+td.store:hover {
+    color: #c2c2c2;
+    cursor: default;
+    background: white;
+}
+

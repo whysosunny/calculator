@@ -35,6 +35,13 @@ Operation.prototype.calculate = function() {
     }
 };
 
+Operation.prototype.clearValues = function() {
+    this.first = 0;
+    this.second = 0;
+    this.currentOperation = "";
+    this.result = 0;
+};
+
 var resultBox = {
     screen : "",
     updateScreen : function(val) {
@@ -47,41 +54,31 @@ var resultBox = {
         this.screen = "";
         this.updateScreen();
     }
-
 };
 
 
 
 var calculation = new Operation();
+
 $("td").click(function() {
+    var that = this;
+    var opDisplay = $("td.operation-display");
     switch(this.className) {
         case "number":
             resultBox.updateScreen(Number(this.innerText));
             break;
         case "clear":
             resultBox.clearScreen();
+            opDisplay.text("");
             break;
-        case "plus":
-            var symbol = this.innerText;
-            $("td.operation").text(symbol);
-            calculation.first =  Number(resultBox.screen);
-            calculation.currentOperation = "plus";
-            resultBox.screen = "";
-            break;
-        case "minus":
-            calculation.first = Number(resultBox.screen);
-            calculation.currentOperation = "minus";
-            resultBox.screen = "";
-            break;
-        case "times":
-            calculation.first = Number(resultBox.screen);
-            calculation.currentOperation = "times";
-            resultBox.screen = "";
-            break;
-        case "divide":
-            calculation.first = Number(resultBox.screen);
-            calculation.currentOperation = "divide";
-            resultBox.screen = "";
+        case "operation":
+            if(resultBox.screen !== "") {
+                calculation.first = Number(resultBox.screen);
+                console.log(calculation.first);
+                calculation.currentOperation = this.getAttribute("id") ;
+                resultBox.screen = "";
+                opDisplay.text(that.innerText);
+            }
             break;
         case "point":
             console.log(resultBox.screen);
@@ -92,12 +89,16 @@ $("td").click(function() {
             }
             break;
         case "result":
-            calculation.second = Number(resultBox.screen);
-            calculation.calculate();
-            resultBox.clearScreen();
-            resultBox.updateScreen(calculation.result);
-            break;
+            if(calculation.first) {
+                calculation.second = Number(resultBox.screen);
+                calculation.calculate();
+                resultBox.clearScreen();
+                resultBox.updateScreen(calculation.result);
+                opDisplay.text("");
+                calculation.clearValues();
+            }
 
+            break;
     }
 });
 
