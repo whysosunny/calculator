@@ -1,0 +1,43 @@
+body {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 30px;
+    font-weight: bold;
+}
+
+tr,td,table {
+    border: 1px solid black;
+
+}
+
+table tr td.operation {
+    border: none;
+}
+
+td {
+    width: 70px;
+    height: 70px;
+    padding: 10px;
+    text-align: center;
+}
+
+tr:last-of-type td{
+    font-size: 24px;
+    height: 60px;
+}
+
+a {
+    color: black;
+}
+
+td:hover {
+    cursor: pointer;
+}
+
+.output-box {
+    text-align: right;
+    padding: 10px 20px;
+    border-left: none;
+}
