@@ -39,7 +39,6 @@ Operation.prototype.clearValues = function() {
     this.first = 0;
     this.second = 0;
     this.currentOperation = "";
-    this.result = 0;
 };
 
 var resultBox = {
@@ -48,7 +47,6 @@ var resultBox = {
         if(val || val === 0)
             this.screen += val;
         $("td.output-box").text(resultBox.screen);
-
     },
     clearScreen: function() {
         this.screen = "";
@@ -59,20 +57,30 @@ var resultBox = {
 
 
 var calculation = new Operation();
+var opDisplay = $("td.operation-display");
+function resultOp() {
+    calculation.second = Number(resultBox.screen);
+    calculation.calculate();
+    resultBox.clearScreen();
+    resultBox.updateScreen(calculation.result);
+    resultBox.screen="";
+    opDisplay.text("");
+}
+
 
 $("td").click(function() {
     var that = this;
-    var opDisplay = $("td.operation-display");
     switch(this.className) {
         case "number":
             resultBox.updateScreen(Number(this.innerText));
             break;
         case "clear":
             resultBox.clearScreen();
+            calculation.result = 0;
             opDisplay.text("");
             break;
         case "operation":
-            if(resultBox.screen !== "") {
+            if(resultBox.screen !== "" && !calculation.first) {
                 calculation.first = Number(resultBox.screen);
                 console.log(calculation.first);
                 calculation.currentOperation = this.getAttribute("id") ;
@@ -90,13 +98,10 @@ $("td").click(function() {
             break;
         case "result":
             if(calculation.first) {
-                calculation.second = Number(resultBox.screen);
-                calculation.calculate();
-                resultBox.clearScreen();
-                resultBox.updateScreen(calculation.result);
-                opDisplay.text("");
+                resultOp();
                 calculation.clearValues();
             }
+
 
             break;
     }
